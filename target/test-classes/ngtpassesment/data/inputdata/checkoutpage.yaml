@@ -1,0 +1,28 @@
+GAJA_PERSONAL_DETAILS: &personal_details
+  FULL_NAME: "Gajendra Mahadevan"
+  ADDRESS_LINE_1: "55 Ivan Allen Jr. Blvd"
+  ADDRESS_LINE_2: "Suite#800"
+  CITY: "Atlanta"
+  STATE: "Georgia"
+  ZIP: "30308"
+  COUNTRY: "233"
+  PHONE_NUMBER: "6145555555"
+  DELIVERY_INSTRUCTIONS: "Please drop the package at the reception"
+  GATE_CODE: "4321"
+
+DYNAMIC_DATA:
+  FULL_NAME: <%faker.name.fullName:%>
+  ADDRESS_LINE_1: <%faker.address.streetAddress:%>
+  ADDRESS_LINE_2: <%faker.address.secondaryAddress:%>
+  CITY: <%faker.address.cityName:%>
+  STATE: <%faker.address.state:%>
+  ZIP: <%faker.address.zipCode:%>
+  COUNTRY: "233"
+  PHONE_NUMBER: "6145555555"
+  DELIVERY_INSTRUCTIONS: <%faker.lorem.paragraph:%>
+  GATE_CODE: <%regex:[0-9]{4}%>
+
+
+
+
+
