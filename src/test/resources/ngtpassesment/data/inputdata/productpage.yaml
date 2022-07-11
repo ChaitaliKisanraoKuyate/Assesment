@@ -1,0 +1,7 @@
+ADD_CASE_TO_CART:
+  ADD_TO_CART: "click"
+
+SAMSUNG_GALAXY_S10_PLUS_CASE:
+  ADD_TO_CART: "click"
+  CLOSE_SIDE_PANE: "click"
+  VIEW_CART: "click"

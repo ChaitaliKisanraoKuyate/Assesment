@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.ey</groupId>
+	<artifactId>nextgen-testing-platform</artifactId>
+	<version>1.1.0</version>
+	<packaging>jar</packaging>
+	<name>nextgen-testing-platform</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.surefire-failsafe.plugin.version>2.22.2</maven.surefire-failsafe.plugin.version>
+		<maven.build.helper.plugin.version>3.0.0</maven.build.helper.plugin.version>
+		<cucumber.version>6.8.2</cucumber.version>
+		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+		<generated.runner.directory>target/parallel/runners</generated.runner.directory>
+		<generated.feature.directory>target/parallel/features</generated.feature.directory>
+		<fasterxml.jackson>2.11.3</fasterxml.jackson>
+		<selenium.drivers>3.141.59</selenium.drivers>
+		<apache.poi>4.1.2</apache.poi>
+		<karate.release>0.9.6</karate.release>
+		<junit-jupiter-version>5.7.0</junit-jupiter-version>
+
+		<!--Run time properties updated here will
+			override the values in cucumber.properties. Command line: mvn [clean] [install|test|verify] -Dpropertyname=value
+		-->
+		<application>ngtpassesment</application>
+		<environment></environment>
+		<browser></browser>
+		<headless></headless>
+		<takes_screenshot></takes_screenshot>
+		<deploy_alm_connector></deploy_alm_connector>
+		<Update_Historical_Properties></Update_Historical_Properties>
+		<Deploy_Self-Healing></Deploy_Self-Healing>
+		<flashfill></flashfill>
+		<close_browser_after_test></close_browser_after_test>
+		<implicit_wait_duration_sec></implicit_wait_duration_sec>
+		<default_wait_duration_sec></default_wait_duration_sec>
+		<platform></platform>
+		<platform_version></platform_version>
+		<grid></grid>
+		<gridURL></gridURL>
+		<default_select_by_type></default_select_by_type>
+		<input_data_type></input_data_type>
+		<page_object_format></page_object_format>
+		<close_browser_after_test></close_browser_after_test>
+		<allowDynamicData></allowDynamicData>
+		<parallelDataInjection></parallelDataInjection>
+		<accessibility></accessibility>
+		<accessibility_report_type></accessibility_report_type>
+		<power_bi_push></power_bi_push>
+		<create_accessibility_excel></create_accessibility_excel>
+		<downloadFileLocation></downloadFileLocation>
+		<source.feature>${project.basedir}/src/test/resources/${application}/features</source.feature>
+		<parallelizationMode>features</parallelizationMode>
+		<tags></tags>
+		<skip_cluecumber_report>false</skip_cluecumber_report>
+		<skip_default_report>false</skip_default_report>
+		<skip_surefire>true</skip_surefire>
+		<skip_failsafe>false</skip_failsafe>
+		<test></test>
+		<reporting.phase>post-integration-test</reporting.phase>
+	</properties>
+
+	<dependencies>
+		<!--Do not change this version. IT is set to automatically take the latest version-->
+		<dependency>
+			<groupId>spark</groupId>
+			<artifactId>spark-sql</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/spark-sql_2.12-3.0.1.jar</systemPath>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>spark</groupId>
+			<artifactId>spark-catalyst</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/spark-catalyst_2.12-3.0.1.jar</systemPath>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>spark</groupId>
+			<artifactId>spark-core</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/spark-core_2.12-3.0.1.jar</systemPath>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>etaf-api</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/etaf-api-0.1.5.jar</systemPath>
+			<version>0.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>etaf-step-definitions</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/etaf-step-definitions-1.2.0.jar</systemPath>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>etaf-core-library</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/etaf-core-library-1.2.0.jar</systemPath>
+			<version>1.2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>etaf-helpers</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/etaf-helpers-1.1.2.jar</systemPath>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>etl-step-definitions</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/etl-step-definitions-1.0.4.jar</systemPath>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>license-validator</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/license-validator-1.0.6.jar</systemPath>
+			<version>1.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.javax0.license3j</groupId>
+			<artifactId>license3j</artifactId>
+			<version>3.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ey</groupId>
+			<artifactId>etl-core-libraries</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/lib/etl-core-libraries.jar</systemPath>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.12.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>4.2.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.cedarsoft.commons/io -->
+		<dependency>
+			<groupId>com.cedarsoft.commons</groupId>
+			<artifactId>io</artifactId>
+			<version>8.9.2</version>
+		</dependency>
+		<!--General Reporting-->
+		<dependency>
+			<groupId>net.masterthought</groupId>
+			<artifactId>cucumber-reporting</artifactId>
+			<version>5.3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>datatable</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>${cucumber.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-picocontainer</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>gherkin</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+
+
+		<!-- These are the junit dependencies -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit-jupiter-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine -->
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>${junit-jupiter-version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- These are the selenium-webdriver dependencies -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium.drivers}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>${selenium.drivers}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.squareup.okio</groupId>
+					<artifactId>okio</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>${selenium.drivers}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>htmlunit-driver</artifactId>
+            <version>2.44.0</version>
+        </dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>${selenium.drivers}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${apache.poi}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${apache.poi}</version>
+		</dependency>
+		 <!--these are for test data parsing using yaml-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-scala_2.12</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.27</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20200518</version>
+		</dependency>
+		<dependency>
+			<groupId>com.codeborne</groupId>
+			<artifactId>phantomjsdriver</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.karate</groupId>
+			<artifactId>karate-apache</artifactId>
+			<version>${karate.release}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.karate</groupId>
+			<artifactId>karate-junit4</artifactId>
+			<version>${karate.release}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.karate</groupId>
+			<artifactId>karate-core</artifactId>
+			<version>${karate.release}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.2.9.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>avalon-framework</groupId>
+					<artifactId>avalon-framework</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>6.2.2.jre8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-core</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com.sf.ucanaccess/ucanaccess -->
+		<dependency>
+			<groupId>net.sf.ucanaccess</groupId>
+			<artifactId>ucanaccess</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.healthmarketscience.jackcess/jackcess -->
+		<dependency>
+			<groupId>com.healthmarketscience.jackcess</groupId>
+			<artifactId>jackcess</artifactId>
+			<version>3.5.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.5.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.stephenc.monte</groupId>
+			<artifactId>monte-screen-recorder</artifactId>
+			<version>0.7.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.hervian</groupId>
+			<artifactId>lambda-factory</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.ozlerhakan</groupId>
+			<artifactId>poiji</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<!-- This dependency is for parallel test execution-->
+		<!-- https://mvnrepository.com/artifact/com.trivago.rta/cucable-plugin -->
+		<dependency>
+			<groupId>com.trivago.rta</groupId>
+			<artifactId>cucable-plugin</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.opendevl</groupId>
+			<artifactId>json2flat</artifactId>
+			<version>1.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.13.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.http-client</groupId>
+			<artifactId>google-http-client-jackson2</artifactId>
+			<version>1.36.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>29.0-jre</version>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>tag-expressions</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>${cucumber.version}</version>
+		</dependency>
+	</dependencies>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>oss-sonatype</id>
+			<name>oss-sonatype</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/test/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>com.trivago.rta</groupId>
+				<artifactId>cucable-plugin</artifactId>
+				<version>1.8.0</version>
+				<executions>
+					<execution>
+						<id>generate-test-resources</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>parallel</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- This can be either a Java class file or a text based template -->
+					<sourceRunnerTemplateFile>src/test/java/methods/CucableJavaTemplate.java</sourceRunnerTemplateFile>
+					<!--<sourceRunnerTemplateFile>src/test/resources/cucable.template</sourceRunnerTemplateFile>-->
+
+					<!-- process all tests in the given directory -->
+					<sourceFeatures>${source.feature}</sourceFeatures>
+
+					<!-- process a specific feature file in the given directory -->
+					<!--<sourceFeatures>src/test/resources/features/testfeature/MyTest.feature</sourceFeatures>-->
+
+					<!-- process multiple feature files -->
+					<!--<sourceFeatures>-->
+					<!--src/test/resources/features/testfeature2,-->
+					<!--src/test/resources/features/testfeature/MyTest8.feature-->
+					<!--</sourceFeatures>-->
+
+					<!-- process a specific feature file and specific line numbers in the given directory -->
+					<!--<sourceFeatures>src/test/resources/features/testfeature/MyTest1.feature:8:19</sourceFeatures>-->
+
+					<generatedFeatureDirectory>${generated.feature.directory}</generatedFeatureDirectory>
+					<generatedRunnerDirectory>${generated.runner.directory}</generatedRunnerDirectory>
+
+					<!-- optional: custom data that is available in Cucable placeholders in a template -->
+					<!--<customPlaceholders>-->
+					<!--<comment>This should appear inside the template</comment>-->
+					<!--</customPlaceholders>-->
+
+					<!-- optional: Cucumber tag expression to include or exclude scenarios with certain tags (see https://docs.cucumber.io/cucumber/api/#tag-expressions) -->
+<!--					                    <includeScenarioTags>${tags}</includeScenarioTags>-->
+					<!--<includeScenarioTags>not @skipMe</includeScenarioTags>-->
+					<!--<includeScenarioTags>(@scenario1Tag1 or @scenario1Tag2) and not @skipMe</includeScenarioTags>-->
+
+					<!-- optional: change parallelization mode of Cucable (default: 'scenarios')-->
+<!--					<parallelizationMode>scenarios</parallelizationMode>-->
+					<parallelizationMode>${parallelizationMode}</parallelizationMode>
+
+					<!-- optional: number of test runs to create runners and features multiple times
+                         if set to a number greater than 1 -->
+					<!--<numberOfTestRuns>1</numberOfTestRuns>-->
+
+					<!-- optional: generate a fixed number of runners and distribute all features round-robin.
+                     This can only be used if desiredNumberOfFeaturesPerRunner is NOT used! -->
+					<!--<desiredNumberOfRunners>2</desiredNumberOfRunners>-->
+
+					<!-- optional: distribute a fixed number features per runner round-robin.
+                    This can only be used if desiredNumberOfRunners is NOT used! -->
+					<!--<desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>-->
+
+					<!-- optional: Cucable log level -->
+					<logLevel>default</logLevel>
+					<!--<logLevel>compact</logLevel>-->
+					<!--<logLevel>minimal</logLevel>-->
+					<!--<logLevel>off</logLevel>-->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${maven.build.helper.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${generated.runner.directory}</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<!--the below configuration enables properties from pom file and command line to override cucumber.properties file-->
+				<configuration>
+					<outputFile>${project.build.directory}/runtime_override.properties</outputFile>
+					<properties/>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>write-project-properties</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire-failsafe.plugin.version}</version>
+				<configuration>
+					<skipTests>${skip_surefire}</skipTests>
+					<failIfNoTests>false</failIfNoTests>
+					<includes>
+						<include>**/unit-tests/*Test.java</include>
+						<include>**/APICukesTest.java</include>
+					</includes>
+					<systemProperties>
+						<karate.options>${source.feature}</karate.options>
+					</systemProperties>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven.surefire-failsafe.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>Run parallel tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>verify</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<skipTests>${skip_failsafe}</skipTests>
+					<testFailureIgnore>true</testFailureIgnore>
+					<forkCount>4</forkCount>
+					<reuseForks>false</reuseForks>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
+					<disableXmlReport>true</disableXmlReport>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>net.masterthought</groupId>
+				<artifactId>maven-cucumber-reporting</artifactId>
+				<version>5.4.0</version>
+				<executions>
+					<execution>
+						<id>execution</id>
+						<phase>${reporting.phase}</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<projectName>API tests</projectName>
+							<!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
+							<skip>${skip_default_report}</skip>
+							<!-- output directory for the generated report -->
+							<outputDirectory>${project.build.directory}/reports</outputDirectory>
+							<!-- optional, defaults to outputDirectory if not specified -->
+							<inputDirectory>${project.build.directory}/reports</inputDirectory>
+							<jsonFiles>
+								<!-- supports wildcard or name pattern -->
+								<param>**/*${application}*.json</param>
+								<param>**/Runner*.json</param>
+							</jsonFiles>
+							<!--							&lt;!&ndash; optional, defaults to outputDirectory if not specified &ndash;&gt;-->
+							<!--							<classificationDirectory>${project.build.directory}/classifications</classificationDirectory>-->
+							<!--							<classificationFiles>-->
+							<!--								&lt;!&ndash; supports wildcard or name pattern &ndash;&gt;-->
+							<!--								<param>sample.properties</param>-->
+							<!--								<param>other.properties</param>-->
+							<!--							</classificationFiles>-->
+
+							<!-- optional, set true to group features by its Ids -->
+							<mergeFeaturesById>false</mergeFeaturesById>
+							<mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>
+							<checkBuildResult>false</checkBuildResult>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.trivago.rta</groupId>
+				<artifactId>cluecumber-report-plugin</artifactId>
+				<version>1.10.0</version>
+				<executions>
+					<execution>
+						<id>report</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>reporting</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+				 	<skip>${skip_cluecumber_report}</skip>
+					<sourceJsonReportDirectory>target/reports</sourceJsonReportDirectory>
+					<generatedHtmlReportDirectory>target/cluecumber</generatedHtmlReportDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<delete>
+									<fileset dir="${project.build.directory}" includes="*.properties"/>
+								</delete>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<source>11</source>
+					<target>11</target>
+					<compilerArgument></compilerArgument>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
